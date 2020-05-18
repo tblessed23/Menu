@@ -1,4 +1,4 @@
-package com.example.android.menu;
+package com.example.android.popularmoviespractice;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
