@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout  xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:context=".DetailActivity"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+
+    <ScrollView
+        android:layout_height="match_parent"
+        android:layout_width="match_parent">
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:gravity="center_horizontal">
+
+            <ImageView
+                android:layout_height="200dp"
+                android:layout_width="match_parent"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
+                android:id="@+id/image_iv"/>
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/movie_title_label"
+                android:textStyle="bold"
+                android:text="@string/movie_title"
+                android:layout_marginTop="7dp"/>
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/movietitle_tv"
+                android:layout_marginBottom="@dimen/activity_layout_marginBottom"/>
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/release_date_label"
+                android:textStyle="bold"
+                android:text="@string/release_date_label"/>
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/release_date_tv"
+                android:layout_marginBottom="@dimen/activity_layout_marginBottom"
+                android:paddingLeft="@dimen/activity_padding_BottomRightLeft"
+                android:paddingRight="@dimen/activity_padding_BottomRightLeft"
+                android:paddingBottom="@dimen/activity_padding_BottomRightLeft"/>
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:textStyle="bold"
+                android:text="@string/user_rating_label"/>
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/user_rating_tv"
+                android:layout_marginBottom="@dimen/activity_layout_marginBottom"
+                android:paddingLeft="@dimen/activity_padding_BottomRightLeft"
+                android:paddingRight="@dimen/activity_padding_BottomRightLeft"
+                android:paddingBottom="@dimen/activity_padding_BottomRightLeft"/>
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:textStyle="bold"
+                android:text="@string/plot_synopsis_label"/>
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/plot_synopsis_tv"
+                android:layout_marginBottom="@dimen/activity_layout_marginBottom"
+                android:paddingLeft="@dimen/activity_padding_BottomRightLeft"
+                android:paddingRight="@dimen/activity_padding_BottomRightLeft"
+                android:paddingBottom="@dimen/activity_padding_BottomRightLeft"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
