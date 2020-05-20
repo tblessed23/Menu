@@ -2,8 +2,13 @@
 <resources>
 
     <!--In activity_detail.xml-->
+
+
     <dimen name="activity_horizontal_margin">16dp</dimen>
+
     <dimen name="activity_vertical_margin">16dp</dimen>
+
     <dimen name="activity_layout_marginBottom">22dp</dimen>
+
     <dimen name="activity_padding_BottomRightLeft">16dp</dimen>
 </resources>

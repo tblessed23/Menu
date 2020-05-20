@@ -1,8 +1,13 @@
-package com.example.android.menu;
+package com.example.android.popularmoviespractice;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
+import static org.junit.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,6 +26,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.example.android.menu", appContext.getPackageName());
+        assertEquals("com.example.android.popularmoviespractice", appContext.getPackageName());
     }
 }
