@@ -39,12 +39,15 @@ public class DetailActivity extends AppCompatActivity {
 
         // Using getParcelableExtra(String key) method
         if (intent.hasExtra("Movies")) {
+
+            //Bundle data = getIntent().getExtras();
+             //movies = (Movies) data.getParcelable(Intent.EXTRA_INTENT);
              movies = intent.getParcelableExtra("Movies");
-            //Picasso.get().load(mImageBaseUrl + movies.getmImage()).into(moviePosterImageView);
+            Picasso.get().load(mImageBaseUrl + movies.getmImage()).into(moviePosterImageView);
             movietitle = movies.getmTitle();
-            //releasedate = movies.getmReleaseDate();
-            //userrating = movies.getmUserRating();
-           // synopsis = movies.getmSynopsis();
+            releasedate = movies.getmReleaseDate();
+            userrating = movies.getmUserRating();
+           synopsis = movies.getmSynopsis();
         }
 
         if (movies == null) {
@@ -96,14 +99,14 @@ public class DetailActivity extends AppCompatActivity {
        movieTitleTextView.setText(movietitle);
         //TextView alsoknownaslabel = findViewById(R.id.movie_title_label);
 
-//        releaseDateTextView = findViewById(R.id.release_date_tv);
-//        releaseDateTextView.setText(releasedate);
-//        //TextView originlabel = findViewById(R.id.release_date_label);
-//
-//        userRatingTextView = findViewById(R.id.user_rating_tv);
-//        userRatingTextView.setText(userrating);
-//
-//        plotSynopsisTextView = findViewById(R.id.plot_synopsis_tv);
-//        plotSynopsisTextView.setText(synopsis);
+        releaseDateTextView = findViewById(R.id.release_date_tv);
+        releaseDateTextView.setText(releasedate);
+        //TextView originlabel = findViewById(R.id.release_date_label);
+
+        userRatingTextView = findViewById(R.id.user_rating_tv);
+        userRatingTextView.setText(userrating);
+
+        plotSynopsisTextView = findViewById(R.id.plot_synopsis_tv);
+        plotSynopsisTextView.setText(synopsis);
     }
 }
