@@ -1,7 +1,9 @@
-package com.example.android.popularmoviespractice;
+package com.example.android.popularmoviespractice.utilities;
 
 import android.text.TextUtils;
 import android.util.Log;
+
+import com.example.android.popularmoviespractice.tables.Movies;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,21 +24,9 @@ public class JsonUtils {
     private static final String LOG_TAG = JsonUtils.class.getSimpleName();
 
     /**
-     * Create a private constructor because no one should ever create a {@link
-     * JsonUtils} object.
-     * This class is only meant to hold static variables and methods, which
-     * can be accessed
-     * directly from the class name JsonUtils (and an object instance of
-     * JsonUtils is not needed).
+     * Query the themoviedb.org dataset and return a list of {@link Movies} objects.
      */
-    private JsonUtils() {
-    }
-
-
-    /**
-     * Query the USGS dataset and return a list of {@link Movies} objects.
-     */
-    public static List<Movies> fetchEarthquakeData(String requestUrl) {
+    public static List<Movies> fetchMovieData(String requestUrl) {
 
         // Create URL object
         URL url = createUrl(requestUrl);
@@ -49,11 +39,11 @@ public class JsonUtils {
             Log.e(LOG_TAG, "Problem making the HTTP request.", e);
         }
 
-        // Extract relevant fields from the JSON response and create a list of {@link Earthquake}s
-        List<Movies> news = extractMovies(jsonResponse);
+        // Extract relevant fields from the JSON response and create a list of {@link Movie}s
+        List<Movies> movies = extractMovies(jsonResponse);
 
         // Return the list of {@link Earthquake}s
-        return news;
+        return movies;
     }
 
     /**
@@ -135,15 +125,15 @@ public class JsonUtils {
      * Return a list of {@link Movies} objects that has been built up from
      * parsing a JSON response.
      */
-    public static List<Movies> extractMovies(String newsJSON) {
+    public static List<Movies> extractMovies(String moviesJSON) {
 
         // If the JSON string is empty or null, then return early.
-        if (TextUtils.isEmpty(newsJSON)) {
+        if (TextUtils.isEmpty(moviesJSON)) {
             return null;
         }
 
 
-        // Create an empty ArrayList that we can start adding news to
+        // Create an empty ArrayList that we can start adding movies to
         List<Movies> movies = new ArrayList<>();
 
         // Try to parse the JSON Response. If there's a problem with
@@ -153,16 +143,17 @@ public class JsonUtils {
         // message to the logs.
         try {
 
-            // Build up a list of News objects with the corresponding
+            // Build up a list of Movie objects with the corresponding
             //data.
 
-            JSONObject root = new JSONObject(newsJSON);
+            JSONObject root = new JSONObject(moviesJSON);
            JSONArray resultsArray = root.getJSONArray("results");
 
 
            for (int i = 0; i < resultsArray.length(); i++) {
                JSONObject currentMovie = resultsArray.getJSONObject(i);
 
+              int movieId = currentMovie.optInt("id");
                String originaltitle = currentMovie.getString("original_title");
                String releasedate = currentMovie.getString("release_date");
                String userrating = currentMovie.getString("vote_average");
@@ -170,7 +161,7 @@ public class JsonUtils {
                 String image = currentMovie.getString("poster_path");
 
 
-                Movies newmovie = new Movies(originaltitle, releasedate, userrating, synopsis, image);
+                Movies newmovie = new Movies(movieId, originaltitle, releasedate, userrating, synopsis, image);
                 movies.add(newmovie);
 
             }
@@ -187,6 +178,9 @@ public class JsonUtils {
         // Return the list of news
         return movies;
     }
+
+
+
 }
 
 

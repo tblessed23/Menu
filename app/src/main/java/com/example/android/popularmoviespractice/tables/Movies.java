@@ -1,8 +1,11 @@
-package com.example.android.popularmoviespractice;
+package com.example.android.popularmoviespractice.tables;
 
-import android.content.Context;
+
 import android.os.Parcel;
 import android.os.Parcelable;
+
+
+
 
 public class Movies implements Parcelable {
 
@@ -16,6 +19,8 @@ public class Movies implements Parcelable {
         }
     };
 
+
+    private int movieId;
     private String mTitle;
     private String mReleaseDate;
     private String mUserRating;
@@ -23,16 +28,18 @@ public class Movies implements Parcelable {
     private String mImage;
 
 
-
     /**
      * No args constructor for use in serialization
+     *
      * @param movies
      */
     public Movies(String movies) {
     }
 
     //Regular Constructor
-    public Movies (String title, String releasedate, String userrating, String synopsis){
+
+    public Movies(String title, String releasedate, String userrating, String synopsis) {
+
         this.mTitle = title;
         this.mReleaseDate = releasedate;
         this.mUserRating = userrating;
@@ -40,14 +47,21 @@ public class Movies implements Parcelable {
     }
 
 
-
-    public Movies(String title, String releasedate, String userrating, String synopsis, String image) {
+    public Movies(int id, String title, String releasedate, String userrating, String synopsis, String image) {
+        this.movieId = id;
         this.mTitle = title;
         this.mReleaseDate = releasedate;
         this.mUserRating = userrating;
         this.mSynopsis = synopsis;
         this.mImage = image;
+    }
 
+    public int getId() {
+        return movieId;
+    }
+
+    public void setId(int id) {
+        this.movieId = id;
     }
 
     public String getmTitle() {
@@ -91,15 +105,14 @@ public class Movies implements Parcelable {
     }
 
 
-
     //Parceling constructor
-    public Movies (Parcel in) {
+    public Movies(Parcel in) {
+        this.movieId = in.readInt();
         this.mTitle = in.readString();
         this.mReleaseDate = in.readString();
         this.mUserRating = in.readString();
         this.mSynopsis = in.readString();
         this.mImage = in.readString();
-
     }
 
     @Override
@@ -109,21 +122,11 @@ public class Movies implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.movieId);
         dest.writeString(this.mTitle);
         dest.writeString(this.mReleaseDate);
         dest.writeString(this.mUserRating);
         dest.writeString(this.mSynopsis);
-       dest.writeString(this.mImage);
-
+        dest.writeString(this.mImage);
     }
-
-//    @Override
-//    public String toString() {
-//       return "Movies{" +
-//                "title='" + mTitle + '\'' +
-//                ", releasedate='" + mReleaseDate + '\'' +
-//                ", userrating='" + mUserRating + '\'' +
-//               ", synopsis='" + mSynopsis +'\'' +
-//                '}';
-//    }
 }

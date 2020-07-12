@@ -1,22 +1,18 @@
-package com.example.android.popularmoviespractice;
+package com.example.android.popularmoviespractice.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Movie;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.net.Uri;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
 
+
+import com.example.android.popularmoviespractice.DetailActivity;
+import com.example.android.popularmoviespractice.R;
+import com.example.android.popularmoviespractice.tables.Movies;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -26,25 +22,19 @@ public class MovieAdapter extends
         RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
 
     private List<Movies> mDataset;
-    List<Movies> mNewsData;
     private final Context mContext;
     private ListItemClickListener mOnClickListener;
+    static Context stringcontext;
 
-    public void setMovieData(List<Movies> news) {
-        mDataset = news;
+    public void setMovieData(List<Movies> movies) {
+        mDataset = movies;
         notifyDataSetChanged();
     }
 
 
-
     public interface ListItemClickListener {
-
-        public void onListItemClick (int mDataset);
+        void onListItemClick(int mDataset);
     }
-
-//    public void setOnItemClickListener(ListItemClickListener listener) {
-//        mOnClickListener = listener;
-//    }
 
     /**
      * Constructor for MovieAdapter that accepts a number of items to display
@@ -56,7 +46,6 @@ public class MovieAdapter extends
     public MovieAdapter(Context context, ArrayList<Movies> movies) {
         mContext = context;
         mDataset = movies;
-        //mOnClickListener = listener;
     }
 
 
@@ -75,18 +64,18 @@ public class MovieAdapter extends
      * @param position The position of the item within the adapter's data set.
      */
     @Override
-    public void onBindViewHolder(MovieViewHolder holder, final int position) {
+    public void onBindViewHolder(MovieViewHolder holder, @SuppressLint("RecyclerView") final int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         // Get the data model based on position
         String mImageBaseUrl = "http://image.tmdb.org/t/p/w185";
         final Movies movie = mDataset.get(position);
-        ImageView ingredientsIv = holder.movieListTextView.findViewById
-                (R.id.movie_item_list_textview);
+        ImageView ingredientsIv = holder.movieListImageView.findViewById
+                (R.id.movie_item_list_imageview);
         Picasso.get().load(mImageBaseUrl + movie.getmImage()).resize
                 (500,750).into(ingredientsIv);
 
-        holder.movieListTextView.setOnClickListener(new View.OnClickListener() {
+        holder.movieListImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent =  new Intent(mContext, DetailActivity.class);
@@ -94,9 +83,6 @@ public class MovieAdapter extends
                 mContext.startActivity(intent);
             }
         });
-
-        //holder.movieListTextView.setText(movie.getmTitle());
-
     }
 
     /**
@@ -104,7 +90,7 @@ public class MovieAdapter extends
      behind the scenes
      * to help layout our Views and for animations.
      *
-     * @return The number of items available in our forecast
+     * @return The number of items available in our list
      */
     @Override
     public int getItemCount() {
@@ -124,13 +110,13 @@ public class MovieAdapter extends
             implements View.OnClickListener {
 
         // each data item is just a string in this case
-        public ImageView movieListTextView;
+        public ImageView movieListImageView;
 
 
         public MovieViewHolder(View v) {
             super(v);
-            movieListTextView = v.findViewById
-                    (R.id.movie_item_list_textview);
+            movieListImageView = v.findViewById
+                    (R.id.movie_item_list_imageview);
 
             //Call setOnClickListener on the view passed into the constructor
             //(use 'this' as the OnClickListener)
@@ -139,13 +125,9 @@ public class MovieAdapter extends
 
         @Override
         public void onClick(View v) {
-
             int position = getAdapterPosition();
             mOnClickListener.onListItemClick(position);
-
-
         }
-
     }
 
     /**
@@ -163,7 +145,7 @@ public class MovieAdapter extends
     layout. See
      *
      *                  for more details.
-     * @return A new NumberViewHolder that holds the View for each list item
+     * @return A new MovieViewHolder that holds the View for each list item
      */
     @Override
     public MovieViewHolder onCreateViewHolder(ViewGroup viewGroup, int

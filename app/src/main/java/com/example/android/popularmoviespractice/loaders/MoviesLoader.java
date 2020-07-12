@@ -1,7 +1,11 @@
-package com.example.android.popularmoviespractice;
+package com.example.android.popularmoviespractice.loaders;
 
-import android.content.AsyncTaskLoader;
+import android.support.v4.content.AsyncTaskLoader;
+//import android.content.AsyncTaskLoader;
 import android.content.Context;
+
+import com.example.android.popularmoviespractice.tables.Movies;
+import com.example.android.popularmoviespractice.utilities.JsonUtils;
 
 import java.util.List;
 
@@ -39,10 +43,12 @@ public class MoviesLoader extends AsyncTaskLoader<List<Movies>> {
             return null;
         }
 
-        // Perform the network request, parse the response, and extract a list of news stories.
-        List<Movies> news = JsonUtils.fetchEarthquakeData(mUrl);
-        return news;
-    }}
+        // Perform the network request, parse the response, and extract a list of movies.
+        List<Movies> movies = JsonUtils.fetchMovieData(mUrl);
+        return movies;
+    }
+
+}
 
 
 
