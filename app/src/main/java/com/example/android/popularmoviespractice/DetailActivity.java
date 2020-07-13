@@ -178,7 +178,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         // Append query parameter and its value.
         uriBuilder.appendEncodedPath(Integer.toString(movieId));
         uriBuilder.appendEncodedPath("reviews");
-        uriBuilder.appendQueryParameter("api_key", "543e8145fb4bd3a4d9f616fb389b7356");
+        uriBuilder.appendQueryParameter("api_key", "");
         uriBuilder.appendQueryParameter("language", "en-US");
 
 
