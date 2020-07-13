@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,6 +20,7 @@ import com.example.android.popularmoviespractice.adapters.ReviewAdapter;
 import com.example.android.popularmoviespractice.loaders.ReviewsLoader;
 import com.example.android.popularmoviespractice.tables.Movies;
 import com.example.android.popularmoviespractice.tables.Reviews;
+import com.example.android.popularmoviespractice.utilities.JsonUtils;
 import com.example.android.popularmoviespractice.utilities.NetworkHelper;
 import com.squareup.picasso.Picasso;
 
@@ -27,6 +29,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class DetailActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Reviews>> {
+
+    private static final String LOG_TAG = DetailActivity.class.getSimpleName();
 
     TextView movieIdTextView;
     TextView movieTitleTextView;
@@ -47,14 +51,12 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
 
     /**
      * Recyclerview
-     *
      */
 
     RecyclerView movieReviewsRecyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private ReviewAdapter mReviewAdapter;
     private ArrayList<Reviews> movieReviews;
-
 
 
     /**
@@ -70,17 +72,11 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
     private static final String REVIEWS_REQUEST_URL = "https://api.themoviedb.org/3/movie";
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        if(NetworkHelper.networkIsAvailable(this)){
-
-            LoaderManager loaderManager = getSupportLoaderManager();
-            loaderManager.initLoader(MOVIESARTICLE_LOADER_ID, null, this);
-        }
 
 /**
  * Begin Recyclerview
@@ -112,18 +108,18 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
 
         Intent intent = getIntent();
         if (intent == null) {
-           closeOnError();
+            closeOnError();
         }
 
         // Using getParcelableExtra(String key) method
         if (intent.hasExtra(getResources().getString(R.string.intent_key))) {
-             movies = intent.getParcelableExtra(getResources().getString(R.string.intent_key));
-            Picasso.get().load(mImageBaseUrl + movies.getmImage()).resize(500,750).into(moviePosterImageView);
+            movies = intent.getParcelableExtra(getResources().getString(R.string.intent_key));
+            Picasso.get().load(mImageBaseUrl + movies.getmImage()).resize(500, 750).into(moviePosterImageView);
 
             movietitle = movies.getmTitle();
             releasedate = movies.getmReleaseDate();
             userrating = movies.getmUserRating();
-           synopsis = movies.getmSynopsis();
+            synopsis = movies.getmSynopsis();
             movieId = movies.getId();
         }
 
@@ -136,6 +132,13 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         populateUI(movies);
 
         setTitle(movies.getmTitle());
+
+        if (NetworkHelper.networkIsAvailable(this)) {
+
+            LoaderManager loaderManager = getSupportLoaderManager();
+            loaderManager.initLoader(MOVIESARTICLE_LOADER_ID, null, this);
+        }
+
     }
 
     private void closeOnError() {
@@ -147,8 +150,8 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
     private void populateUI(Movies movies) {
 
         //Set the Text of the Movie Object Variables
-       movieTitleTextView = findViewById(R.id.movietitle_tv);
-       movieTitleTextView.setText(movietitle);
+        movieTitleTextView = findViewById(R.id.movietitle_tv);
+        movieTitleTextView.setText(movietitle);
 
         releaseDateTextView = findViewById(R.id.release_date_tv);
         releaseDateTextView.setText(releasedate);
@@ -160,8 +163,8 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         plotSynopsisTextView = findViewById(R.id.plot_synopsis_tv);
         plotSynopsisTextView.setText(TextUtils.join(",", Collections.singleton(synopsis)));
 
-//        movieIdTextView = findViewById(R.id.movie_id);
-//        movieIdTextView.setText(Integer.toString(movieId));
+       movieIdTextView = findViewById(R.id.movie_id);
+        movieIdTextView.setText(Integer.toString(movieId));
 
     }
 
@@ -169,23 +172,23 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
     @Override
     public Loader<List<Reviews>> onCreateLoader(int i, Bundle bundle) {
 
-        // parse breaks apart the URI string that's passed into its parameter
-        Uri baseUri = Uri.parse(REVIEWS_REQUEST_URL);
+            // parse breaks apart the URI string that's passed into its parameter
+            Uri baseUri = Uri.parse(REVIEWS_REQUEST_URL);
 
-        // buildUpon prepares the baseUri that we just parsed so we can add query parameters to it
+            // buildUpon prepares the baseUri that we just parsed so we can add query parameters to it
         Uri.Builder uriBuilder = baseUri.buildUpon();
 
-        // Append query parameter and its value.
-        uriBuilder.appendEncodedPath(Integer.toString(movieId));
-        uriBuilder.appendEncodedPath("reviews");
-        uriBuilder.appendQueryParameter("api_key", "");
-        uriBuilder.appendQueryParameter("language", "en-US");
+            // Append query parameter and its value.
+            uriBuilder.appendEncodedPath(String.valueOf(movieIdTextView.getText()));
+            uriBuilder.appendEncodedPath("reviews");
+            uriBuilder.appendQueryParameter("api_key", "543e8145fb4bd3a4d9f616fb389b7356");
+            uriBuilder.appendQueryParameter("language", "en-US");
 
+            // Return the completed url
+            return new ReviewsLoader(this, uriBuilder.toString());
 
+        }
 
-        // Return the completed url
-        return new ReviewsLoader(this, uriBuilder.toString());
-    }
 
 
 

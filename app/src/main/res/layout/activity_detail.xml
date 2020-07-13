@@ -101,14 +101,14 @@
                 android:id="@+id/movie_reviews"
                 android:scrollbars="horizontal"/>
 
-<!--            <TextView-->
-<!--                android:id="@+id/movie_id"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginBottom="@dimen/activity_layout_marginBottom"-->
-<!--                android:paddingLeft="@dimen/activity_padding_BottomRightLeft"-->
-<!--                android:paddingRight="@dimen/activity_padding_BottomRightLeft"-->
-<!--                android:paddingBottom="@dimen/activity_padding_BottomRightLeft" />-->
+            <TextView
+                android:id="@+id/movie_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/activity_layout_marginBottom"
+                android:paddingLeft="@dimen/activity_padding_BottomRightLeft"
+                android:paddingRight="@dimen/activity_padding_BottomRightLeft"
+                android:paddingBottom="@dimen/activity_padding_BottomRightLeft" />
 
 
 
