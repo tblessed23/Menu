@@ -19,6 +19,7 @@ import com.example.android.popularmoviespractice.adapters.ReviewAdapter;
 import com.example.android.popularmoviespractice.loaders.ReviewsLoader;
 import com.example.android.popularmoviespractice.tables.Movies;
 import com.example.android.popularmoviespractice.tables.Reviews;
+import com.example.android.popularmoviespractice.utilities.NetworkHelper;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -33,32 +34,40 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
     TextView userRatingTextView;
     TextView plotSynopsisTextView;
     ImageView moviePosterImageView;
-    TextView movieReviewAuthorTextView;
-    RecyclerView movieReviewsRecyclerView;
-    //RecyclerView movieReviewsAuthorRecyclerView;
-    private RecyclerView.LayoutManager layoutManager;
-
 
     private Movies movies;
     public List<Reviews> reviews;
-
-  private ReviewAdapter mReviewAdapter;
 
     String movietitle;
     String releasedate;
     String userrating;
     String synopsis;
     int movieId;
-   // String author;
-    String content;
-  //int reviewsId;
     String mImageBaseUrl = "http://image.tmdb.org/t/p/w185";
+
+    /**
+     * Recyclerview
+     *
+     */
+
+    RecyclerView movieReviewsRecyclerView;
+    private RecyclerView.LayoutManager layoutManager;
+    private ReviewAdapter mReviewAdapter;
+    private ArrayList<Reviews> movieReviews;
+
+
+
+    /**
+     * TextView that is displayed when the list is empty
+     */
+
+    private static final int MOVIESARTICLE_LOADER_ID = 1;
 
     /**
      * URL for data from the themoviedb.org website
      */
 
-    private static final String REVIEWS_REQUEST_URL = "https://api.themoviedb.org/3/movie/";
+    private static final String REVIEWS_REQUEST_URL = "https://api.themoviedb.org/3/movie";
 
 
 
@@ -67,29 +76,37 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-//        // Find a reference to the {@link RecyclerView} in the layout
+        if(NetworkHelper.networkIsAvailable(this)){
+
+            LoaderManager loaderManager = getSupportLoaderManager();
+            loaderManager.initLoader(MOVIESARTICLE_LOADER_ID, null, this);
+        }
+
+/**
+ * Begin Recyclerview
+ */
+        //  // Find a reference to the {@link RecyclerView} in the layout
         movieReviewsRecyclerView = (RecyclerView) findViewById(R.id.movie_reviews);
-//
-//
-//
-//        // use a grid layout manager
-        layoutManager = new GridLayoutManager(this, 1, RecyclerView.HORIZONTAL, false);
+
+        // use a grid layout manager
+        layoutManager = new GridLayoutManager(this, 1, RecyclerView.VERTICAL, false);
         movieReviewsRecyclerView.setLayoutManager(layoutManager);
-//
-//        // use this setting to improve performance if you know that changes
-//        // in content do not change the layout size of the RecyclerView
+
+        // use this setting to improve performance if you know that changes
+        // in content do not change the layout size of the RecyclerView
         movieReviewsRecyclerView.setHasFixedSize(true);
-//
-//        // Create a new adapter that takes an empty list of moviess as input
-       mReviewAdapter = new ReviewAdapter(this, new ArrayList<Reviews>(movieId));
+
+        // Create a new adapter that takes an empty list of moviess as input
+        mReviewAdapter = new ReviewAdapter(this, new ArrayList<Reviews>());
         movieReviewsRecyclerView.setAdapter(mReviewAdapter);
-
-
 
         // Set the adapter on the {@link ListView}
         // so the list can be populated in the user interface
         movieReviewsRecyclerView.setAdapter(mReviewAdapter);
 
+/**
+ * End Recyclerview
+ */
 
         moviePosterImageView = findViewById(R.id.image_iv);
 
@@ -143,61 +160,38 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         plotSynopsisTextView = findViewById(R.id.plot_synopsis_tv);
         plotSynopsisTextView.setText(TextUtils.join(",", Collections.singleton(synopsis)));
 
-
-//        StringBuilder sk =  new StringBuilder(100);
-//        sk.append("https://api.themoviedb.org/3/movie/");
-//        sk.append(movieId);
-//        sk.append("/reviews");
-
-//              movieIdTextView = findViewById(R.id.movie_id);
+//        movieIdTextView = findViewById(R.id.movie_id);
 //        movieIdTextView.setText(Integer.toString(movieId));
-
-
-//        movieReviewTextViewString = findViewById(R.id.movie_reviews_string);
-//        movieIdTextView.setText(sk);
-
-
-        //if (movieId == reviewsId) {
-            //movieReviewsAuthorRecyclerView = findViewById(R.id.movie_reviews_author);
-            //movieReviewsAuthorRecyclerView.setVisibility(View.VISIBLE);
-        if (reviews != null ) {
-            movieReviewsRecyclerView.setVisibility(View.VISIBLE);
-
-        }
-
-        //}
 
     }
 
 
     @Override
-    public Loader<List<Reviews>> onCreateLoader (int i, Bundle bundle) {
+    public Loader<List<Reviews>> onCreateLoader(int i, Bundle bundle) {
+
         // parse breaks apart the URI string that's passed into its parameter
-        Uri reviewsBaseUri = Uri.parse(REVIEWS_REQUEST_URL);
+        Uri baseUri = Uri.parse(REVIEWS_REQUEST_URL);
 
         // buildUpon prepares the baseUri that we just parsed so we can add query parameters to it
-        Uri.Builder uriBuilder = reviewsBaseUri.buildUpon();
+        Uri.Builder uriBuilder = baseUri.buildUpon();
 
         // Append query parameter and its value.
         uriBuilder.appendEncodedPath(Integer.toString(movieId));
-        uriBuilder.appendEncodedPath("/reviews");
+        uriBuilder.appendEncodedPath("reviews");
         uriBuilder.appendQueryParameter("api_key", "543e8145fb4bd3a4d9f616fb389b7356");
         uriBuilder.appendQueryParameter("language", "en-US");
 
+
+
         // Return the completed url
-        return new ReviewsLoader(getApplicationContext(), uriBuilder.toString());
-
-
+        return new ReviewsLoader(this, uriBuilder.toString());
     }
 
-    @Override
-    public void onLoadFinished (Loader<List<Reviews>> loader, List<Reviews> reviews) {
 
-//        // Set empty state text to display "No movies found."
-//        if (reviews == null) {
-//            showErrorMessage();
-//            mEmptyStateTextView.setText(R.string.no_movies);
-//        }
+
+    @Override
+    public void onLoadFinished(Loader < List < Reviews >> loader, List < Reviews > reviews) {
+
 
         // Clear the adapter of previous movie data
         mReviewAdapter.clear(new ArrayList<Reviews>());
@@ -209,10 +203,13 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         }
     }
 
+
+
     @Override
-    public void onLoaderReset (Loader<List<Reviews>> loader) {
+    public void onLoaderReset(Loader<List<Reviews>> loader) {
         //Clear the existing data
         mReviewAdapter.clear(new ArrayList<Reviews>());
-
     }
+
+
 }

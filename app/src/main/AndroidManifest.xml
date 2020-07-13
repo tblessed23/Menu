@@ -10,8 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".AddTaskActivity"></activity>
-        <activity android:name=".MostPopularActivity" />
-        <activity android:name=".TopRatedActivity" />
+        <activity android:name=".fragments.MostPopularActivity" />
+        <activity android:name=".fragments.TopRatedActivity" />
         <activity
             android:name=".DetailActivity"
             android:parentActivityName=".MainActivity" />

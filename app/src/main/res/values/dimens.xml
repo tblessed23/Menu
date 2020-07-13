@@ -5,4 +5,7 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="activity_layout_marginBottom">22dp</dimen>
     <dimen name="activity_padding_BottomRightLeft">16dp</dimen>
+
+    <!--In review_item_list -->
+    <dimen name="list_item_height">88dp</dimen>
 </resources>
