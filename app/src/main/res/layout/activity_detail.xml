@@ -26,6 +26,16 @@
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop" />
 
+            <CheckBox
+                android:button="@android:drawable/btn_star"
+                android:padding="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/favorite_checkbox"
+                android:text="Favorite"
+                android:background="@android:color/transparent"
+                android:layout_gravity="center"/>
+
 
             <TextView
                 android:id="@+id/movie_title_label"
@@ -87,12 +97,13 @@
                 android:paddingRight="@dimen/activity_padding_BottomRightLeft"
                 android:paddingBottom="@dimen/activity_padding_BottomRightLeft" />
 
-<!--            &lt;!&ndash; A RecyclerView with some commonly used attributes &ndash;&gt;-->
-<!--            <android.support.v7.widget.RecyclerView-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:id="@+id/movie_reviews_author"-->
-<!--                android:scrollbars="vertical"/>-->
+            <!-- A RecyclerView with some commonly used attributes -->
+            <android.support.v7.widget.RecyclerView
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:paddingBottom="25dp"
+                android:id="@+id/movie_trailers"
+                android:scrollbars="horizontal"/>
 
             <!-- A RecyclerView with some commonly used attributes -->
             <android.support.v7.widget.RecyclerView
@@ -100,18 +111,6 @@
                 android:layout_width="match_parent"
                 android:id="@+id/movie_reviews"
                 android:scrollbars="horizontal"/>
-
-            <TextView
-                android:id="@+id/movie_id"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/activity_layout_marginBottom"
-                android:paddingLeft="@dimen/activity_padding_BottomRightLeft"
-                android:paddingRight="@dimen/activity_padding_BottomRightLeft"
-                android:paddingBottom="@dimen/activity_padding_BottomRightLeft" />
-
-
-
 
 
         </LinearLayout>

@@ -35,9 +35,10 @@ public class SimpleFragmentPagerAdapter extends FragmentPagerAdapter {
 
         if (position == 0) {
             return new MostPopularFragment();
-        } else {
+        } else if (position == 1)  {
             return new TopRatedFragment();
-
+        } else   {
+            return new FavoritesFragment();
         }
     }
 
@@ -46,15 +47,17 @@ public class SimpleFragmentPagerAdapter extends FragmentPagerAdapter {
      */
     @Override
     public int getCount() {
-        return 2;
+        return 3;
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
         if (position == 0) {
             return mContext.getString(R.string.most_popular);
-        } else {
+        } else if (position == 1)  {
             return mContext.getString(R.string.top_rated);
+        } else {
+            return "Favorites";
         }
     }
 }

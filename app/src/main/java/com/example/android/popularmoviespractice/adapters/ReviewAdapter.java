@@ -22,7 +22,6 @@ public class ReviewAdapter extends
 
     private List<Reviews> mDataset;
     private final Context mContext;
-    private Reviews reviews;
 
 
     public void setReviewData(List<Reviews> Reviews) {

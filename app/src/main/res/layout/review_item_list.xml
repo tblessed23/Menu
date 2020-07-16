@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/list_item_height"
-    android:minHeight="@dimen/list_item_height"
-    android:orientation="horizontal">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/movie_reviews_author"
@@ -14,14 +12,18 @@
         android:layout_marginBottom="@dimen/activity_layout_marginBottom"
         android:paddingLeft="@dimen/activity_padding_BottomRightLeft"
         android:paddingRight="@dimen/activity_padding_BottomRightLeft"
-        android:paddingBottom="@dimen/activity_padding_BottomRightLeft" />
+        android:paddingBottom="@dimen/activity_padding_BottomRightLeft"
+        android:background="@android:color/holo_red_light"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        />
 
     <TextView
         android:id="@+id/movie_reviews_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/activity_layout_marginBottom"
+        android:layout_marginBottom="15dp"
         android:paddingLeft="@dimen/activity_padding_BottomRightLeft"
         android:paddingRight="@dimen/activity_padding_BottomRightLeft"
         android:paddingBottom="@dimen/activity_padding_BottomRightLeft" />
-</RelativeLayout>
+</LinearLayout>
