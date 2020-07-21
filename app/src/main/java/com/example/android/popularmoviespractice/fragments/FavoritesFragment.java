@@ -87,24 +87,24 @@ private int favoriteView;
 //        // so the list can be populated in the user interface
         recyclerView.setAdapter(mAdapter);
 
-//        Button button = (Button) rootView.findViewById(R.id.removeFavoriteButton);
-//        button.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v,  final RecyclerView.ViewHolder viewHolder) {
-//                AppExecutors.getInstance().diskIO().execute(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        //The Adapter holds the items you want to delete
-//
-//                        int position = viewHolder.getAdapterPosition();
-//                        List<Favorites> removeFavorite = mAdapter.getTasks();
-//                        mDb.favoritesDao().deleteFavorites(removeFavorite.get(position));
-//                        retrieveFavorites();
-//                    }
-//                });
-//            }
-//        });
+        Button button = (Button) rootView.findViewById(R.id.removeFavoriteButton);
+        button.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v,  final RecyclerView.ViewHolder viewHolder) {
+                AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        //The Adapter holds the items you want to delete
+
+                        int position = viewHolder.getAdapterPosition();
+                        List<Favorites> removeFavorite = mAdapter.getTasks();
+                        mDb.favoritesDao().deleteFavorites(removeFavorite.get(position));
+                        retrieveFavorites();
+                    }
+                });
+            }
+        }).attachToRecyclerView(recyclerView);
 
 //       public void removeFavorite(View view,  final RecyclerView.ViewHolder viewHolder)  {
 //            AppExecutors.getInstance().diskIO().execute(new Runnable() {
