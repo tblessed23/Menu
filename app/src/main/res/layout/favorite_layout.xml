@@ -38,10 +38,9 @@
     </LinearLayout>
 
     <!--This Button is to 'unfavorite' a movie-->
-    <Button
-        android:id="@+id/removeFavoriteButton"
-        android:onClick="removeFavorite"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Remove" />
+        android:text="@string/swipe_delete"
+        android:textSize="12sp" />
 </LinearLayout>

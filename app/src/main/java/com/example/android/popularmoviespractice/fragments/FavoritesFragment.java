@@ -1,18 +1,25 @@
 package com.example.android.popularmoviespractice.fragments;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
+import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.lifecycle.LiveData;
+
+import com.example.android.popularmoviespractice.DetailActivity;
+import com.example.android.popularmoviespractice.MainActivity;
 import com.example.android.popularmoviespractice.R;
 import com.example.android.popularmoviespractice.adapters.FavoritesAdapter;
 import com.example.android.popularmoviespractice.adapters.MovieAdapter;
@@ -31,6 +38,9 @@ import java.util.List;
  */
 public class FavoritesFragment extends Fragment  {
 
+
+    // Constant for logging
+    private static final String TAG = FavoritesFragment.class.getSimpleName();
 private AppDatabase mDb;
 private FavoritesAdapter mAdapter;
 private RecyclerView recyclerView;
@@ -78,7 +88,7 @@ private int favoriteView;
         recyclerView.setHasFixedSize(true);
 //
 //        // Create a new adapter that takes an empty list of moviess as input
-        mAdapter = new FavoritesAdapter(getActivity(), new ArrayList<Favorites>(),  this);
+        mAdapter = new FavoritesAdapter(getActivity(), new ArrayList<Favorites>());
         recyclerView.setAdapter(mAdapter);
 //
 //
@@ -87,37 +97,34 @@ private int favoriteView;
 //        // so the list can be populated in the user interface
         recyclerView.setAdapter(mAdapter);
 
-        Button button = (Button) rootView.findViewById(R.id.removeFavoriteButton);
-        button.setOnClickListener(new View.OnClickListener() {
 
+  /*
+         Add a touch helper to the RecyclerView to recognize when a user swipes to delete an item.
+         An ItemTouchHelper enables touch behavior (like swipe and move) on each ViewHolder,
+         and uses callbacks to signal when a user is performing these actions.
+         */
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
-            public void onClick(View v,  final RecyclerView.ViewHolder viewHolder) {
-                AppExecutors.getInstance().diskIO().execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        //The Adapter holds the items you want to delete
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
 
-                        int position = viewHolder.getAdapterPosition();
-                        List<Favorites> removeFavorite = mAdapter.getTasks();
-                        mDb.favoritesDao().deleteFavorites(removeFavorite.get(position));
-                        retrieveFavorites();
-                    }
-                });
+            // Called when a user swipes left or right on a ViewHolder
+            @Override
+            public void onSwiped(final RecyclerView.ViewHolder viewHolder, int swipeDir) {
+                AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                @Override
+               public void run() {
+                    //The Adapter holds the items you want to delete
+                    int position = viewHolder.getAdapterPosition();
+                   List<Favorites> removeFavorite = mAdapter.getTasks();
+                   mDb.favoritesDao().deleteFavorites(removeFavorite.get(position));
+                   retrieveFavorites();
+                }
+            });
             }
         }).attachToRecyclerView(recyclerView);
 
-//       public void removeFavorite(View view,  final RecyclerView.ViewHolder viewHolder)  {
-//            AppExecutors.getInstance().diskIO().execute(new Runnable() {
-//                @Override
-//               public void run() {
-//                    //The Adapter holds the items you want to delete
-//                    int position = viewHolder.getAdapterPosition();
-//                   List<Favorites> removeFavorite = mAdapter.getTasks();
-//                   mDb.favoritesDao().deleteFavorites(removeFavorite.get(position));
-//                    retrieveFavorites();
-//                }
-//            });
-//        }
 
         return rootView;
     }
@@ -136,6 +143,7 @@ private int favoriteView;
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
+                Log.d(TAG, "Actively retrieving the tasks from the DataBase");
                 final List<Favorites> favorites =   mDb.favoritesDao().loadAllFavorites();
                 //Will be able to simplify once add more Android Architecture Components
                getActivity().runOnUiThread(new Runnable() {

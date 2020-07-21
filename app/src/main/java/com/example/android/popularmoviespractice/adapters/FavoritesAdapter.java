@@ -1,6 +1,7 @@
 package com.example.android.popularmoviespractice.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.android.popularmoviespractice.DetailActivity;
 import com.example.android.popularmoviespractice.R;
 import com.example.android.popularmoviespractice.fragments.FavoritesFragment;
 import com.example.android.popularmoviespractice.tables.AppDatabase;
@@ -26,7 +28,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
     private AppDatabase mDb;
 
     // Member variable to handle item clicks
-   final private ItemClickListener mItemClickListener;
+  // final private ItemClickListener mItemClickListener;
 
     // Class variables for the List that holds task data and the Context
     private List<Favorites> mTaskEntries;
@@ -39,10 +41,10 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
      * @param context  the current Context
      * @param Reviews the ItemClickListener
      */
-    public FavoritesAdapter(Context context, ArrayList<Favorites> Reviews, ItemClickListener listener) {
+    public FavoritesAdapter(Context context, ArrayList<Favorites> Reviews) {
         mContext = context;
         mTaskEntries = Reviews;
-        mItemClickListener = listener;
+        //mItemClickListener = listener;
     }
 
     /**
@@ -74,11 +76,9 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
         int id = taskEntry.getId();
 
 
-
         //Set values
         holder.taskDescriptionView.setText(titleFavorities);
         holder.updatedAtView.setText(String.valueOf(id));
-
 
 
     }
@@ -110,12 +110,12 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
         notifyDataSetChanged();
     }
 
-    public interface ItemClickListener {
-        void onItemClickListener(int itemId);
-    }
+//    public interface ItemClickListener {
+//        void onItemClickListener(int itemId);
+//    }
 
     // Inner class for creating ViewHolders
-    class FavoritesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    class FavoritesViewHolder extends RecyclerView.ViewHolder {
 
         // Class variables for the task description and priority TextViews
         TextView taskDescriptionView;
@@ -132,15 +132,15 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
 
             taskDescriptionView = itemView.findViewById(R.id.taskDescription);
             updatedAtView = itemView.findViewById(R.id.taskUpdatedAt);
-            itemView.setOnClickListener(this);
+           // itemView.setOnClickListener(this);
         }
 
-        @Override
-        public void onClick(View view) {
-            final int elementId = mTaskEntries.get(getAdapterPosition()).getId();
-            mItemClickListener.onItemClickListener(elementId);
-
-        }
+//        @Override
+//        public void onClick(View view) {
+//            final int elementId = mTaskEntries.get(getAdapterPosition()).getId();
+//            mItemClickListener.onItemClickListener(elementId);
+//
+//        }
 
 
     }
