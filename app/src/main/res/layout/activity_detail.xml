@@ -26,15 +26,32 @@
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop" />
 
-            <CheckBox
-                android:button="@android:drawable/btn_star"
-                android:padding="10dp"
+
+            <!-- Add button -->
+            <Button
+                android:id="@+id/saveButton"
+                style="@style/Widget.AppCompat.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/favorite_checkbox"
-                android:text="Favorite"
-                android:background="@android:color/transparent"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:paddingRight="10dp"
+                android:background="@drawable/btn_round"
+                android:text="Mark As Favorite"
+                android:textSize="15dp"
+                android:onClick="saveButton"
+                android:drawableLeft="@drawable/baseline_star_rate_black_18dp"
+                android:textColor="@android:color/primary_text_dark" />
+
+<!--            <CheckBox-->
+<!--                android:button="@android:drawable/btn_star"-->
+<!--                android:padding="10dp"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:id="@+id/favorite_checkbox"-->
+<!--                android:text="Favorite"-->
+<!--                android:background="@android:color/transparent"-->
+<!--                android:layout_gravity="center"/>-->
 
 
             <TextView

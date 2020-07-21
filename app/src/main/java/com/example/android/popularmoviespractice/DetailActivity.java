@@ -1,8 +1,12 @@
 package com.example.android.popularmoviespractice;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
+import android.preference.Preference;
+import android.preference.PreferenceManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +17,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -24,6 +29,7 @@ import com.example.android.popularmoviespractice.adapters.TrailerAdapter;
 import com.example.android.popularmoviespractice.loaders.ReviewsLoader;
 import com.example.android.popularmoviespractice.loaders.TrailersLoader;
 import com.example.android.popularmoviespractice.tables.AppDatabase;
+import com.example.android.popularmoviespractice.tables.AppExecutors;
 import com.example.android.popularmoviespractice.tables.Favorites;
 import com.example.android.popularmoviespractice.tables.Movies;
 import com.example.android.popularmoviespractice.tables.Reviews;
@@ -47,6 +53,7 @@ public class DetailActivity extends AppCompatActivity {
     TextView userRatingTextView;
     TextView plotSynopsisTextView;
     ImageView moviePosterImageView;
+    Button mButton;
 
     private Movies movies;
 
@@ -85,6 +92,7 @@ public class DetailActivity extends AppCompatActivity {
     private static final String MOVIES_REQUEST_URL = "https://api.themoviedb.org/3/movie";
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,29 +101,6 @@ public class DetailActivity extends AppCompatActivity {
         //Initialize Database
         mDb = AppDatabase.getInstance(getApplicationContext());
 
-        final CheckBox checkBox = (CheckBox) findViewById(R.id.favorite_checkbox);
-        if (checkBox.isChecked()) {
-
-            int id = movieId;
-            String title = movietitle;
-
-            final Favorites favorite = new Favorites(id,title);
-            mDb.favoritesDao().insertFavorites(favorite);
-            finish();
-//            AppExecutors.getInstance().diskIO().execute(new Runnable() {
-//                @Override
-//                public void run() {
-//                    if (mTaskId == DEFAULT_TASK_ID) {
-//                        // insert new task
-//                        mDb.favoritesDao().insertFavorites(favorite);
-//                    } else {
-//                        //update task
-//                        favorite.setId(mTaskId);
-//                        mDb.favoritesDao().updateFavorites(favorite);
-//                    }
-//                    finish();
-//                }
-        }
 
 /**
  * Begin Recyclerview for Reviews
@@ -205,16 +190,35 @@ public class DetailActivity extends AppCompatActivity {
 
             LoaderManager loaderTrailerManager = getSupportLoaderManager();
             loaderTrailerManager.initLoader(TRAILERS_LOADER_ID, null, trailerLoader);
-
         }
-
-
-
     }
+
 
     private void closeOnError() {
         finish();
         Toast.makeText(this, R.string.detail_error_message, Toast.LENGTH_SHORT).show();
+    }
+
+
+    /**
+     * onSaveButtonClicked is called when the "save" button is clicked.
+     * It retrieves user input and inserts that new task data into the underlying database.
+     */
+
+    public void saveButton(View view) {
+
+        String titleFavorities = movietitle;
+        int id = movieId;
+
+        final Favorites favorites = new Favorites(id, titleFavorities);
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                mDb.favoritesDao().insertFavorites(favorites);
+                finish();
+            }
+        });
+
     }
 
     //populate the user interface

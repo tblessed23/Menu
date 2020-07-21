@@ -10,7 +10,6 @@
     android:paddingTop="8dp">
 
 
-
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -35,6 +34,14 @@
             android:textColor="@android:color/primary_text_light"
             tools:text="11/11/1111" />
 
+
     </LinearLayout>
 
+    <!--This Button is to 'unfavorite' a movie-->
+    <Button
+        android:id="@+id/removeFavoriteButton"
+        android:onClick="removeFavorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Remove" />
 </LinearLayout>
