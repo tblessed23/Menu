@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.FavoritesViewHolder> {
-    private AppDatabase mDb;
+
 
     // Member variable to handle item clicks
   // final private ItemClickListener mItemClickListener;
@@ -58,7 +58,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
         View view = LayoutInflater.from(mContext)
                 .inflate(R.layout.favorite_layout, parent, false);
 
-        mDb = AppDatabase.getInstance(mContext);
+       // mDb = AppDatabase.getInstance(mContext);
         return new FavoritesViewHolder(view);
     }
 
