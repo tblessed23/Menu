@@ -1,29 +1,24 @@
 package com.example.android.popularmoviespractice;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
-import android.preference.Preference;
-import android.preference.PreferenceManager;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.lifecycle.LiveData;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.Loader;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.android.popularmoviespractice.adapters.MovieAdapter;
 import com.example.android.popularmoviespractice.adapters.ReviewAdapter;
 import com.example.android.popularmoviespractice.adapters.TrailerAdapter;
 import com.example.android.popularmoviespractice.loaders.ReviewsLoader;
@@ -34,9 +29,7 @@ import com.example.android.popularmoviespractice.tables.Favorites;
 import com.example.android.popularmoviespractice.tables.Movies;
 import com.example.android.popularmoviespractice.tables.Reviews;
 import com.example.android.popularmoviespractice.tables.Trailers;
-import com.example.android.popularmoviespractice.utilities.JsonUtils;
 import com.example.android.popularmoviespractice.utilities.NetworkHelper;
-import com.example.android.popularmoviespractice.utilities.TrailersUtils;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -100,7 +93,22 @@ public class DetailActivity extends AppCompatActivity {
 
         //Initialize Database
         mDb = AppDatabase.getInstance(getApplicationContext());
+        //Save Favorites information to Database
+        mButton = findViewById(R.id.buttonSave);
 
+        // get the dao and call getAllImages() on it
+       int currentId = mDb.favoritesDao().loadTaskById(movieId);
+
+        if (movieId == currentId) {
+            mButton.setClickable(false);
+        } else {
+            mButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    saveButton();
+                }
+            });
+        }
 
 /**
  * Begin Recyclerview for Reviews
@@ -194,6 +202,8 @@ public class DetailActivity extends AppCompatActivity {
     }
 
 
+
+
     private void closeOnError() {
         finish();
         Toast.makeText(this, R.string.detail_error_message, Toast.LENGTH_SHORT).show();
@@ -205,7 +215,7 @@ public class DetailActivity extends AppCompatActivity {
      * It retrieves user input and inserts that new task data into the underlying database.
      */
 
-    public void saveButton(View view) {
+    public void saveButton() {
 
         String titleFavorities = movietitle;
         int id = movieId;
@@ -289,39 +299,39 @@ public class DetailActivity extends AppCompatActivity {
     };
 
     private LoaderManager.LoaderCallbacks<List<Trailers>> trailerLoader
-                = new LoaderManager.LoaderCallbacks<List<Trailers>>() {
-            @Override
-            public Loader<List<Trailers>> onCreateLoader(int i, Bundle bundle) {
+            = new LoaderManager.LoaderCallbacks<List<Trailers>>() {
+        @Override
+        public Loader<List<Trailers>> onCreateLoader(int i, Bundle bundle) {
 
-                // parse breaks apart the URI string that's passed into its parameter
-                Uri baseUri = Uri.parse(MOVIES_REQUEST_URL);
+            // parse breaks apart the URI string that's passed into its parameter
+            Uri baseUri = Uri.parse(MOVIES_REQUEST_URL);
 
-                // buildUpon prepares the baseUri that we just parsed so we can add query parameters to it
-                Uri.Builder uriBuilder = baseUri.buildUpon();
+            // buildUpon prepares the baseUri that we just parsed so we can add query parameters to it
+            Uri.Builder uriBuilder = baseUri.buildUpon();
 
-                // Append query parameter and its value.
-                uriBuilder.appendPath(String.valueOf(movieId));
-                uriBuilder.appendEncodedPath("videos");
-                uriBuilder.appendQueryParameter("api_key", "543e8145fb4bd3a4d9f616fb389b7356");
-                uriBuilder.appendQueryParameter("language", "en-US");
+            // Append query parameter and its value.
+            uriBuilder.appendPath(String.valueOf(movieId));
+            uriBuilder.appendEncodedPath("videos");
+            uriBuilder.appendQueryParameter("api_key", "543e8145fb4bd3a4d9f616fb389b7356");
+            uriBuilder.appendQueryParameter("language", "en-US");
 
-                // Return the completed url
-                return new TrailersLoader(getApplicationContext(), uriBuilder.toString());
+            // Return the completed url
+            return new TrailersLoader(getApplicationContext(), uriBuilder.toString());
+        }
+
+        @Override
+        public void onLoadFinished(Loader < List < Trailers >> loader, List < Trailers > trailers) {
+
+
+            // Clear the adapter of previous movie data
+            mTrailerAdapter.clear(new ArrayList<Trailers>());
+
+            // If there is a valid list of {@link Movies}s, then add them to the adapter's
+            // data set. This will trigger the RecyclerView to update.
+            if (trailers != null && !trailers.isEmpty()) {
+                mTrailerAdapter.setReviewData(trailers);
             }
-
-            @Override
-            public void onLoadFinished(Loader < List < Trailers >> loader, List < Trailers > trailers) {
-
-
-                // Clear the adapter of previous movie data
-                mTrailerAdapter.clear(new ArrayList<Trailers>());
-
-                // If there is a valid list of {@link Movies}s, then add them to the adapter's
-                // data set. This will trigger the RecyclerView to update.
-                if (trailers != null && !trailers.isEmpty()) {
-                    mTrailerAdapter.setReviewData(trailers);
-                }
-            }
+        }
 
 
 

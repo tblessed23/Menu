@@ -13,7 +13,7 @@
         android:paddingLeft="@dimen/activity_padding_BottomRightLeft"
         android:paddingRight="@dimen/activity_padding_BottomRightLeft"
         android:paddingBottom="@dimen/activity_padding_BottomRightLeft"
-        android:background="@android:color/holo_red_light"
+        android:background="@color/material400Green"
         android:textColor="@android:color/white"
         android:textStyle="bold"
         />

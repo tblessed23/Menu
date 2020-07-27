@@ -1,28 +1,18 @@
 package com.example.android.popularmoviespractice.adapters;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.drawable.GradientDrawable;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.RecyclerView;
+
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.android.popularmoviespractice.DetailActivity;
 import com.example.android.popularmoviespractice.R;
-import com.example.android.popularmoviespractice.fragments.FavoritesFragment;
-import com.example.android.popularmoviespractice.tables.AppDatabase;
-import com.example.android.popularmoviespractice.tables.AppExecutors;
 import com.example.android.popularmoviespractice.tables.Favorites;
-import com.example.android.popularmoviespractice.tables.Reviews;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.FavoritesViewHolder> {
 

@@ -2,8 +2,8 @@ package com.example.android.popularmoviespractice.fragments;
 
 import android.app.Fragment;
 import android.content.Context;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.android.popularmoviespractice.R;
 
@@ -31,7 +31,7 @@ public class SimpleFragmentPagerAdapter extends FragmentPagerAdapter {
      * @return
      */
     @Override
-    public android.support.v4.app.Fragment getItem(int position) {
+    public androidx.fragment.app.Fragment getItem(int position) {
 
         if (position == 0) {
             return new MostPopularFragment();

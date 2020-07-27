@@ -2,7 +2,7 @@ package com.example.android.popularmoviespractice.utilities;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.v4.content.ContextCompat;
+import androidx.core.content.ContextCompat;
 
 import com.example.android.popularmoviespractice.R;
 

@@ -1,11 +1,9 @@
 package com.example.android.popularmoviespractice.loaders;
 
 import android.content.Context;
-import android.support.v4.content.AsyncTaskLoader;
+import androidx.loader.content.AsyncTaskLoader;
 
-import com.example.android.popularmoviespractice.tables.Movies;
 import com.example.android.popularmoviespractice.tables.Reviews;
-import com.example.android.popularmoviespractice.utilities.JsonUtils;
 import com.example.android.popularmoviespractice.utilities.ReviewUtils;
 
 import java.util.List;

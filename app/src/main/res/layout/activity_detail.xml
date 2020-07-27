@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context=".DetailActivity">
+    tools:context="com.example.android.popularmoviespractice.DetailActivity">
 
 
     <ScrollView
@@ -29,7 +29,7 @@
 
             <!-- Add button -->
             <Button
-                android:id="@+id/saveButton"
+                android:id="@+id/buttonSave"
                 style="@style/Widget.AppCompat.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -37,9 +37,8 @@
                 android:layout_marginTop="20dp"
                 android:paddingRight="10dp"
                 android:background="@drawable/btn_round"
-                android:text="Mark As Favorite"
-                android:textSize="15dp"
-                android:onClick="saveButton"
+                android:text="@string/favorite_button"
+                android:textSize="15sp"
                 android:drawableLeft="@drawable/baseline_star_rate_black_18dp"
                 android:textColor="@android:color/primary_text_dark" />
 
@@ -115,7 +114,7 @@
                 android:paddingBottom="@dimen/activity_padding_BottomRightLeft" />
 
             <!-- A RecyclerView with some commonly used attributes -->
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
                 android:paddingBottom="25dp"
@@ -123,7 +122,7 @@
                 android:scrollbars="horizontal"/>
 
             <!-- A RecyclerView with some commonly used attributes -->
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
                 android:id="@+id/movie_reviews"

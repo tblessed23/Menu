@@ -15,6 +15,7 @@
 
     <string name="user_rating_label">User Rating:</string>
     <string name="intent_key">Movies</string>
+    <string name="favorite_button">Mark As Favorite</string>
 
     <!-- Error messages-->
 
