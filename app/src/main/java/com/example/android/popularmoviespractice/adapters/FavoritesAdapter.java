@@ -16,10 +16,6 @@ import java.util.List;
 
 public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.FavoritesViewHolder> {
 
-
-    // Member variable to handle item clicks
-  // final private ItemClickListener mItemClickListener;
-
     // Class variables for the List that holds task data and the Context
     private List<Favorites> mTaskEntries;
     private Context mContext;
@@ -34,13 +30,12 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
     public FavoritesAdapter(Context context, ArrayList<Favorites> Reviews) {
         mContext = context;
         mTaskEntries = Reviews;
-        //mItemClickListener = listener;
     }
 
     /**
      * Called when ViewHolders are created to fill a RecyclerView.
      *
-     * @return A new TaskViewHolder that holds the view for each task
+     * @return A new FavoritesViewHolder that holds the view for each task
      */
     @Override
     public FavoritesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -48,7 +43,6 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
         View view = LayoutInflater.from(mContext)
                 .inflate(R.layout.favorite_layout, parent, false);
 
-       // mDb = AppDatabase.getInstance(mContext);
         return new FavoritesViewHolder(view);
     }
 
@@ -100,9 +94,6 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
         notifyDataSetChanged();
     }
 
-//    public interface ItemClickListener {
-//        void onItemClickListener(int itemId);
-//    }
 
     // Inner class for creating ViewHolders
     class FavoritesViewHolder extends RecyclerView.ViewHolder {
@@ -113,7 +104,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
 
 
         /**
-         * Constructor for the TaskViewHolders.
+         * Constructor for the FavoritesViewHolders.
          *
          * @param itemView The view inflated in onCreateViewHolder
          */
@@ -122,16 +113,6 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
 
             taskDescriptionView = itemView.findViewById(R.id.taskDescription);
             updatedAtView = itemView.findViewById(R.id.taskUpdatedAt);
-           // itemView.setOnClickListener(this);
         }
-
-//        @Override
-//        public void onClick(View view) {
-//            final int elementId = mTaskEntries.get(getAdapterPosition()).getId();
-//            mItemClickListener.onItemClickListener(elementId);
-//
-//        }
-
-
     }
 }

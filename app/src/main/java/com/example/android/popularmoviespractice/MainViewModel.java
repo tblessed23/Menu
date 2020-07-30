@@ -13,9 +13,9 @@ import com.example.android.popularmoviespractice.tables.Favorites;
 import java.util.List;
 
 public class MainViewModel extends AndroidViewModel {
+
     //Constant for logging
     private static final String TAG = MainViewModel.class.getSimpleName();
-
     private LiveData<List<Favorites>> tasks;
 
     public MainViewModel(@NonNull Application application) {

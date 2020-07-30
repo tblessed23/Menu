@@ -40,6 +40,4 @@ public class Favorites {
     public void setTitleFavorites(String title) {
         this.titleFavorites = titleFavorites;
     }
-
-
 }

@@ -34,8 +34,6 @@ public class ReviewsLoader extends AsyncTaskLoader<List<Reviews>> {
     }
 
 
-
-
     @Override
     public List<Reviews> loadInBackground() {
         if (mUrl == null) {

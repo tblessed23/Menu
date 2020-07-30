@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.example.android.popularmoviespractice.R;
 import com.example.android.popularmoviespractice.tables.Trailers;
-import com.example.android.popularmoviespractice.utilities.ColorUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,10 +32,10 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerV
     String trailerSite;
     String movieType;
     String movieKey;
+    private final int limit = 3;
 
     public interface ListItemClickListener {
-
-        public void onListItemClick (int mNumberItems);
+        void onListItemClick (int mNumberItems);
     }
 
 
@@ -89,19 +88,8 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerV
         //Set the text of viewHolderIndex
          viewHolder.viewHolderIndex.setText("Trailer: " + viewHolderCount);
 
-        // ColorUtils.getViewHolderBackgroundColorFromInstance and pass in a Context and the viewHolderCount
-        int backgroundColorForViewHolder = ColorUtils.getViewHolderBackgroundColorFromInstance(context, viewHolderCount);
-
-
-        // Set the background color of viewHolder.itemView with the color from above
-         viewHolder.itemView.setBackgroundColor(backgroundColorForViewHolder);
-
-        // Increment viewHolderCount and log its value
+         // Increment viewHolderCount and log its value
         viewHolderCount = viewHolderCount + 1;
-
-        // Log.d(TAG, "onCreateViewHolder: number of ViewHolders created: "
-        //         + viewHolderCount);
-
 
         return viewHolder;
     }
@@ -154,7 +142,15 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerV
      */
     @Override
     public int getItemCount() {
-        return mNumberItems.size();
+
+
+        if(mNumberItems.size() > limit){
+            return limit;
+        }
+        else
+        {
+            return mNumberItems.size();
+        }
     }
 
     public void clear(List<Trailers> data) {
@@ -169,8 +165,6 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerV
     class TrailerViewHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
 
-        // Will display the position in the list, ie 0 through getItemCount() - 1
-        TextView listItemNumberView;
 
         // Used to display the ViewHolder index
         TextView viewHolderIndex;
@@ -187,19 +181,10 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerV
         public TrailerViewHolder(View itemView) {
             super(itemView);
 
-            //listItemNumberView = (TextView) itemView.findViewById(R.id.tv_item_number);
-            viewHolderIndex = (TextView) itemView.findViewById(R.id.tv_view_holder_instance);
+            viewHolderIndex = itemView.findViewById(R.id.tv_view_holder_instance);
             itemView.setOnClickListener(this);
         }
 
-        /**
-         * A method we wrote for convenience. This method will take an integer as input and
-         * use that integer to display the appropriate text within a list item.
-         * @param //listIndex Position of the item in the list
-         */
-//        //void bind(int listIndex) {
-//            listItemNumberView.setText(String.valueOf(listIndex));
-//        }
 
         @Override
         public void onClick(View v) {

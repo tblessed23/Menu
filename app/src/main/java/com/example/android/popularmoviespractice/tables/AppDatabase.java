@@ -8,6 +8,8 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
+import com.example.android.popularmoviespractice.R;
+
 @Database(entities = {Favorites.class}, version = 1, exportSchema = false)
 
 public abstract class AppDatabase extends RoomDatabase {
@@ -16,6 +18,7 @@ public abstract class AppDatabase extends RoomDatabase {
     private static final Object LOCK = new Object();
     private static final String DATABASE_NAME = "popularmovies";
     private static AppDatabase sInstance;
+    private Context mContext;
 
     public static AppDatabase getInstance(Context context) {
         if (sInstance == null) {
@@ -31,7 +34,5 @@ public abstract class AppDatabase extends RoomDatabase {
     }
 
     public abstract FavoritesDao favoritesDao();
-
-
 }
 

@@ -32,9 +32,6 @@ public class TrailersLoader extends AsyncTaskLoader<List<Trailers>>  {
         forceLoad();
     }
 
-
-
-
     @Override
     public List<Trailers> loadInBackground() {
         if (mUrl == null) {

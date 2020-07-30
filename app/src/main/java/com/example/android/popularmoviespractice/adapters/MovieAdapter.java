@@ -24,7 +24,7 @@ public class MovieAdapter extends
     private List<Movies> mDataset;
     private final Context mContext;
     private ListItemClickListener mOnClickListener;
-    static Context stringcontext;
+
 
     public void setMovieData(List<Movies> movies) {
         mDataset = movies;
@@ -64,10 +64,11 @@ public class MovieAdapter extends
      * @param position The position of the item within the adapter's data set.
      */
     @Override
-    public void onBindViewHolder(MovieViewHolder holder, @SuppressLint("RecyclerView") final int position) {
+    public void onBindViewHolder(final MovieViewHolder holder, @SuppressLint("RecyclerView") final int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         // Get the data model based on position
+
         String mImageBaseUrl = "http://image.tmdb.org/t/p/w185";
         final Movies movie = mDataset.get(position);
         ImageView ingredientsIv = holder.movieListImageView.findViewById

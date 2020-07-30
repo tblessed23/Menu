@@ -176,9 +176,6 @@ public class ReviewUtils {
         // Return the list of news
         return Reviews;
     }
-
-
-
 }
 
 

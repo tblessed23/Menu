@@ -44,17 +44,8 @@ public class Reviews implements Parcelable {
 
     public Reviews(String author, String content) {
         this.mAuthor = author;
-        //this.movieId = id;
         this.mContent = content;
     }
-
-   // public int getId() {
-     //   return movieId;
-    //}
-
-    //public void setId(int id) {
-       // this.movieId = id;
-    //}
 
     public String getmAuthor() {
         return mAuthor;
@@ -76,7 +67,6 @@ public class Reviews implements Parcelable {
 
     //Parceling constructor
     public Reviews(Parcel in) {
-        //this.movieId = in.readInt();
         this.mAuthor = in.readString();
         this.mContent = in.readString();
 
@@ -89,7 +79,6 @@ public class Reviews implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        //dest.writeInt(this.movieId);
         dest.writeString(this.mAuthor);
         dest.writeString(this.mContent);
     }

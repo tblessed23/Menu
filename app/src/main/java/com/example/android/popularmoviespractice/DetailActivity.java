@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.Loader;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,7 +13,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -40,7 +40,7 @@ public class DetailActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = DetailActivity.class.getSimpleName();
 
-    TextView movieIdTextView;
+
     TextView movieTitleTextView;
     TextView releaseDateTextView;
     TextView userRatingTextView;
@@ -65,11 +65,12 @@ public class DetailActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager;
     private ReviewAdapter mReviewAdapter;
 
+
+
     /**
      * RecyclerView for Trailers
      */
     RecyclerView trailersRecyclerView;
-    private RecyclerView.LayoutManager layoutTrailerManager;
     private TrailerAdapter mTrailerAdapter;
 
     //Member variable for the Database
@@ -93,22 +94,26 @@ public class DetailActivity extends AppCompatActivity {
 
         //Initialize Database
         mDb = AppDatabase.getInstance(getApplicationContext());
-        //Save Favorites information to Database
         mButton = findViewById(R.id.buttonSave);
 
-        // get the dao and call getAllImages() on it
-       int currentId = mDb.favoritesDao().loadTaskById(movieId);
 
-        if (movieId == currentId) {
-            mButton.setClickable(false);
-        } else {
-            mButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    saveButton();
+
+        LiveData<Favorites> currentId = mDb.favoritesDao().loadTaskById(movieId);
+        currentId.observe(this, new Observer<Favorites>() {
+            @Override
+            public void onChanged(Favorites favorites) {
+                if (favorites !=null && favorites.getId()==movieId){
+                    mButton.setClickable(false);
+                }else {
+                    mButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            saveButton();
+                        }
+                    });
                 }
-            });
-        }
+            }
+        });
 
 /**
  * Begin Recyclerview for Reviews
@@ -201,6 +206,26 @@ public class DetailActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        LiveData<Favorites> currentId = mDb.favoritesDao().loadTaskById(movieId);
+        currentId.observe(this, new Observer<Favorites>() {
+            @Override
+            public void onChanged(Favorites favorites) {
+                if (favorites !=null && favorites.getId()==movieId){
+                    mButton.setEnabled(false);
+                }else {
+                    mButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            saveButton();
+                        }
+                    });
+                }
+            }
+        });
+    }
 
 
 
@@ -265,9 +290,9 @@ public class DetailActivity extends AppCompatActivity {
 
             // Append query parameter and its value.
             uriBuilder.appendPath(String.valueOf(movieId));
-            uriBuilder.appendEncodedPath("reviews");
-            uriBuilder.appendQueryParameter("api_key", "543e8145fb4bd3a4d9f616fb389b7356");
-            uriBuilder.appendQueryParameter("language", "en-US");
+            uriBuilder.appendEncodedPath(getResources().getString(R.string.reviews));
+            uriBuilder.appendQueryParameter(getResources().getString(R.string.api_key), "543e8145fb4bd3a4d9f616fb389b7356");
+            uriBuilder.appendQueryParameter(getResources().getString(R.string.language), "en-US");
 
             // Return the completed url
             return new ReviewsLoader(getApplicationContext(), uriBuilder.toString());
@@ -311,9 +336,9 @@ public class DetailActivity extends AppCompatActivity {
 
             // Append query parameter and its value.
             uriBuilder.appendPath(String.valueOf(movieId));
-            uriBuilder.appendEncodedPath("videos");
-            uriBuilder.appendQueryParameter("api_key", "543e8145fb4bd3a4d9f616fb389b7356");
-            uriBuilder.appendQueryParameter("language", "en-US");
+            uriBuilder.appendEncodedPath(getResources().getString(R.string.videos));
+            uriBuilder.appendQueryParameter(getResources().getString(R.string.api_key), "543e8145fb4bd3a4d9f616fb389b7356");
+            uriBuilder.appendQueryParameter(getResources().getString(R.string.language), "en-US");
 
             // Return the completed url
             return new TrailersLoader(getApplicationContext(), uriBuilder.toString());
@@ -340,8 +365,5 @@ public class DetailActivity extends AppCompatActivity {
             //Clear the existing data
             mTrailerAdapter.clear(new ArrayList<Trailers>());
         }
-
-
     };
-
 }

@@ -124,8 +124,9 @@ public class TopRatedFragment extends Fragment implements LoaderManager.LoaderCa
         Uri.Builder uriBuilder = baseUri.buildUpon();
 
         // Append query parameter and its value.
-        uriBuilder.appendQueryParameter("api_key", "543e8145fb4bd3a4d9f616fb389b7356");
-        uriBuilder.appendQueryParameter("language", "en-US");
+        uriBuilder.appendQueryParameter((getResources().getString(R.string.api_key)), "543e8145fb4bd3a4d9f616fb389b7356");
+        uriBuilder.appendQueryParameter((getResources().getString(R.string.language)), "en-US");
+
 
 
         // Return the completed url

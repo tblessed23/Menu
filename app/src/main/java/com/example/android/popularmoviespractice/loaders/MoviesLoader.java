@@ -47,7 +47,6 @@ public class MoviesLoader extends AsyncTaskLoader<List<Movies>> {
         List<Movies> movies = JsonUtils.fetchMovieData(mUrl);
         return movies;
     }
-
 }
 
 

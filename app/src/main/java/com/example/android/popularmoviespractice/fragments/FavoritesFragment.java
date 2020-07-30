@@ -118,16 +118,13 @@ private RecyclerView.LayoutManager layoutManager;
         //Insert Update andDelete do not have to observe changes in the database. This is for retrieving tass.
         //LiveData is for retrieving data, AppExcutors for the other three
         // Log.d(TAG, "Actively retrieving the tasks from the DataBase");
-        //final LiveData<List<Favorites>> favorites =   mDb.favoritesDao().loadAllFavorites();
         MainViewModel viewModel=new ViewModelProvider((ViewModelStoreOwner) getActivity()).get(MainViewModel.class);
         viewModel.getTasks().observe((LifecycleOwner) getActivity(), new Observer<List<Favorites>>() {
             @Override
             public void onChanged(List<Favorites> favoritesEntries) {
-                Log.d(TAG, "Updating list of tasks from LiveData in ViewModel");
+                Log.d(TAG, getResources().getString(R.string.error_log) );
                 mAdapter.setTasks(favoritesEntries);
             }
         });
-
     }
-
 }

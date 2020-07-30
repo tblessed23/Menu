@@ -178,9 +178,6 @@ public class JsonUtils {
         // Return the list of news
         return movies;
     }
-
-
-
 }
 
 

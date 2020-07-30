@@ -32,17 +32,10 @@ public class Trailers implements Parcelable {
     //Regular Constructor
 
     public Trailers(String key, String site, String type) {
-
         this.mKey = key;
         this.mSite = site;
         this.mType = type;
-
     }
-
-
-
-
-
 
     public String getmKey() {
         return mKey;
@@ -68,11 +61,6 @@ public class Trailers implements Parcelable {
         this.mType = type;
     }
 
-
-
-
-
-
     //Parceling constructor
     public Trailers(Parcel in) {
         this.mKey = in.readString();
@@ -90,6 +78,5 @@ public class Trailers implements Parcelable {
         dest.writeString(this.mKey);
         dest.writeString(this.mSite);
         dest.writeString(this.mType);
-
     }
 }

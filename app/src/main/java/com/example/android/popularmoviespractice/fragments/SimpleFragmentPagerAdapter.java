@@ -57,7 +57,7 @@ public class SimpleFragmentPagerAdapter extends FragmentPagerAdapter {
         } else if (position == 1)  {
             return mContext.getString(R.string.top_rated);
         } else {
-            return "Favorites";
+            return mContext.getString(R.string.favorites);
         }
     }
 }
